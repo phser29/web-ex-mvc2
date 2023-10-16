@@ -40,7 +40,17 @@
 		<servlet-name>footer</servlet-name>
 		<url-pattern>/footer</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>mypage</servlet-name>
+		<jsp-file>/mypage.jsp</jsp-file>
+	</servlet>
 
+	<servlet-mapping>
+		<servlet-name>mypage</servlet-name>
+		<url-pattern>/mypage</url-pattern>
+	</servlet-mapping>
+	
 	<servlet>
 		<servlet-name>joinForm</servlet-name>
 		<jsp-file>/joinForm.jsp</jsp-file>
@@ -52,23 +62,13 @@
 	</servlet-mapping>
 
 	<servlet>
-		<servlet-name>joinFormPro</servlet-name>
-		<jsp-file>/joinFormPro.jsp</jsp-file>
+		<servlet-name>joinFormAction</servlet-name>
+		<servlet-class>user.controller.JoinFormAction</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
-		<servlet-name>joinFormPro</servlet-name>
+		<servlet-name>joinFormAction</servlet-name>
 		<url-pattern>/joinForm</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>mypage</servlet-name>
-		<jsp-file>/mypage.jsp</jsp-file>
-	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>mypage</servlet-name>
-		<url-pattern>/mypage</url-pattern>
 	</servlet-mapping>
 	
 	<servlet>
@@ -82,13 +82,23 @@
 	</servlet-mapping>
 	
 	<servlet>
-		<servlet-name>loginFormPro</servlet-name>
-		<jsp-file>/loginFormPro.jsp</jsp-file>
+		<servlet-name>loginFormAction</servlet-name>
+		<servlet-class>user.controller.loginFormAction</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
-		<servlet-name>loginFormPro</servlet-name>
+		<servlet-name>loginFormAction</servlet-name>
 		<url-pattern>/loginForm</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>logoutFormAction</servlet-name>
+		<servlet-class>user.controller.logoutFormAction</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>logoutFormAction</servlet-name>
+		<url-pattern>/logoutForm</url-pattern>
 	</servlet-mapping>
 	
 	<servlet>
@@ -102,12 +112,12 @@
 	</servlet-mapping>
 	
 	<servlet>
-		<servlet-name>editUserFormPro</servlet-name>
-		<jsp-file>/editUserFormPro.jsp</jsp-file>
+		<servlet-name>editUserFormAction</servlet-name>
+		<servlet-class>user.controller.EditUserForm</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
-		<servlet-name>editUserFormPro</servlet-name>
+		<servlet-name>editUserFormAction</servlet-name>
 		<url-pattern>/editUserForm</url-pattern>
 	</servlet-mapping>
 	
@@ -122,12 +132,12 @@
 	</servlet-mapping>
 	
 	<servlet>
-		<servlet-name>leaveFormPro</servlet-name>
-		<jsp-file>/leaveFormPro.jsp</jsp-file>
+		<servlet-name>leaveFormAction</servlet-name>
+		<servlet-class>user.controller.LeaveFormAction</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
-		<servlet-name>leaveFormPro</servlet-name>
+		<servlet-name>leaveFormAction</servlet-name>
 		<url-pattern>/leaveForm</url-pattern>
 	</servlet-mapping>
   

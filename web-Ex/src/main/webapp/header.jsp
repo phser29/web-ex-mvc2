@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="/resources/style/grid.css">
+
 <title>The Joeun JSP MVC1</title>
 </head>
 <body>

@@ -34,7 +34,21 @@ public class User {
 		
 	}
 	
+	public User(int id, String username, String password, String name, String email, String phone, String country, String birth, String gender) {
+		this.id = id;
+		this.username = username;
+		this.password = password;
+		this.name = name;
+		this.email = email;
+		this.phone = phone;
+		this.country = country;
+		this.birth = birth;
+		this.gender = gender;
+		
+	}
+	
 	public User(UserRequestDto user) {
+		this.id = user.getId();
 		this.username = user.getUsername();
 		this.password = user.getPassword();
 		this.name = user.getName();
