@@ -7,33 +7,43 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import user.UserDao;
+
 /**
  * Servlet implementation class JoinFormAction
  */
 public class JoinFormAction extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	UserDao dao = UserDao.getInstance();
+	
     /**
      * Default constructor. 
      */
     public JoinFormAction() {
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		doPost(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
+		String name = request.getParameter("name");
+		String email = request.getParameter("email");
+		String phone = request.getParameter("phone");
+		String country = request.getParameter("country");
+		String birth = request.getParameter("birth");
+		String gender = request.getParameter("gender");
+		
+		dao.createUser(null);
+		
 	}
 
 }

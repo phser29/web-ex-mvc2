@@ -17,14 +17,13 @@
 	<%
 		UserDao dao = UserDao.getInstance();
 		String username = (String)session.getAttribute("username");
-		UserResponseDto dto = dao.findByUsername(username);
 	%>
 		<form method="POST" action="/editUserForm" id="form">
 			<div>
 				<div class="group">
-					<input type="text" name="username" id="username" value="<%= dto.getUsername() %>">
-					<input type="text" name="password" id="password" value="<%= dto.getPassword() %>"> 
-					<input type="email" name="email" id="email" value="<%= dto.getEmail() %>">
+					<input type="text" name="username" id="username" value="">
+					<input type="text" name="password" id="password" value=""> 
+					<input type="email" name="email" id="email" value="">
 				</div>
 				<div class="error-msg">
 					<ul>
@@ -34,8 +33,8 @@
 				</div>
 				
 				<div class="group">
-					<input type="text" name="name" id="name" placeholder="이름" value="<%= dto.getName() %>"> 
-					<input type="number" name="birth" id="birth" min="19000101" max="99999999" placeholder="생년월일" value="<%= dto.getBirth() %>"> 
+					<input type="text" name="name" id="name" placeholder="이름" value=""> 
+					<input type="number" name="birth" id="birth" min="19000101" max="99999999" placeholder="생년월일" value=">"> 
 					
 					<input type="radio" name="gender" value="male" id="male" checked> 
 					<input type="radio" name="gender" value="female" id="female" > 
@@ -62,7 +61,7 @@
 							<option value="ym">Yemen +967</option>
 						</select>
 					</div>
-					<input type="text" name="phone" id="phone"  value="<%= dto.getPhone() %>">
+					<input type="text" name="phone" id="phone"  value="">
 				</div>
 				<div class="error-msg">
 					<ul>

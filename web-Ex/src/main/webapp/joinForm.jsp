@@ -13,7 +13,6 @@
 	
 		<form method="POST" action="/joinForm" id="form">
 			<div>
-	
 				<div class="group">
 					<input type="text" name="username" id="username" placeholder="아이디">
 					<input type="password" name="password" id="password" placeholder="비밀번호"> 
@@ -30,9 +29,9 @@
 					<input type="text" name="name" id="name" placeholder="이름"> 
 					<input type="number" name="birth" id="birth" min="19000101" max="99999999" placeholder="생년월일"> 
 					
-					<input type="radio" name="gender" value="male" id="male" checked> 
-					<input type="radio" name="gender" value="female" id="female"> 
-					<input type="radio" name="gender" value="other" id="other">
+					<input type="radio" name="gender" value="1" id="male" checked> 
+					<input type="radio" name="gender" value="2" id="female"> 
+					<input type="radio" name="gender" value="3" id="other">
 					
 					<div id="gender">
 						<label for="male" id="for-male">

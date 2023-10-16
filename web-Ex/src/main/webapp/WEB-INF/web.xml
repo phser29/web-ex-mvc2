@@ -73,7 +73,7 @@
 	
 	<servlet>
 		<servlet-name>loginForm</servlet-name>
-		<jsp-file>/loginForm.jsp</jsp-file>
+		<jsp-file>loginForm.jsp</jsp-file>
 	</servlet>
 
 	<servlet-mapping>
@@ -83,7 +83,7 @@
 	
 	<servlet>
 		<servlet-name>loginFormAction</servlet-name>
-		<servlet-class>user.controller.loginFormAction</servlet-class>
+		<servlet-class>user.controller.LoginFormAction</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
@@ -93,7 +93,7 @@
 	
 	<servlet>
 		<servlet-name>logoutFormAction</servlet-name>
-		<servlet-class>user.controller.logoutFormAction</servlet-class>
+		<servlet-class>user.controller.LogoutFormAction</servlet-class>
 	</servlet>
 
 	<servlet-mapping>

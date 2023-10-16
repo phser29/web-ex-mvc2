@@ -14,11 +14,11 @@
 	</header>
 	<nav>
 		<ul>
-			<li><a href="/join">회원가입</a></li>
-			<li><a href="/login">로그인</a></li>
-			<li><a href="/mypage">마이페이지</a></li>
-			<li><a href="/editUser">수정페이지</a></li>
-			<li><a href="/leave">삭제페이지</a></li>
+			<li><a href="join">회원가입</a></li>
+			<li><a href="login">로그인</a></li>
+			<li><a href="mypage">마이페이지</a></li>
+			<li><a href="editUser">회원목록 조회</a></li>
+			<li><a href="leave">삭제페이지</a></li>
 		</ul>
 	</nav>
 </body>

@@ -7,8 +7,9 @@
 </head>
 <jsp:include page="/header"/>
 <body>
-<h1><%=session.getAttribute("username") %>님 환영합니다.</h1>
+<h1>${log }님 환영합니다.</h1>
 <a href="/login">로그인으로</a>
+<a href="/logoutForm">로그아웃</a>
 </body>
 <jsp:include page="/footer"/>
 </html>

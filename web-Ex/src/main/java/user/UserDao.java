@@ -31,17 +31,17 @@ public class UserDao {
 	
 	
 	// 1) Create
-//	public boolean createUser(UserRequestDto user) {
-//		if(isDuplicatedUser(user)) 
-//			return false;
-//		
-//		User newUser = new User(user);
-//		newUser.setId(generateId());
-//		list.add(newUser);
-//		
-//		return true;
-//	}
-//	
+	public boolean createUser(UserRequestDto user) {
+		conn = DBManager.getConnection();
+		
+		if(conn != null) {
+			String sql = "INSERT INTO `user` (id, username, password, name, email, phone, country, birth, gender)"
+					+ "VALUES (, ?, ?, ?, ?, ?, ?, ?, ?)";
+		}
+		
+		return true;
+	}
+	
 //	public boolean isDuplicatedUser(UserRequestDto user) {
 //		
 //		for(int i=0; i<list.size(); i++) {
@@ -50,7 +50,7 @@ public class UserDao {
 //		}
 //		return false;
 //	}
-//	
+	
 //	private int generateId() {
 //		int id = 0;
 //		
@@ -72,9 +72,9 @@ public class UserDao {
 		conn = DBManager.getConnection();
 		
 		if(conn != null) {
+			String sql = "SELECT * FROM `user` WHERE id=?";
 			
 			try {
-				String sql = "SELECT * FROM `user` WHERE id=?";
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setInt(1, id);
 				
@@ -100,20 +100,54 @@ public class UserDao {
 				
 			} catch (SQLException e) {
 				e.printStackTrace();
+			} finally {
+				DBManager.close(conn, pstmt, rs);
 			}
 		}
-		 
+		
 		return result;
 	}
 	
-//	public UserResponseDto findByUsername(String username) {
-//		for(int i=0; i<list.size(); i++) {
-//			if(list.get(i).getUsername().equals(username))
-//				return new UserResponseDto(list.get(i));
-//		}
-//		
-//		return null;
-//	}
+	public UserResponseDto findByUsername(String username) {
+		conn = DBManager.getConnection();
+		
+		if(conn != null) {
+			String sql = "SELECT * FROM `user` WHERE username=?";
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, username);
+				
+				rs = pstmt.executeQuery();
+				
+				if(rs.next()) {
+					int id = rs.getInt(1);
+					String password = rs.getString(3);
+					String name = rs.getString(4);
+					String email = rs.getString(5);
+					String phone = rs.getString(6);
+					String country = rs.getString(7);
+					String birth = rs.getString(8); //date
+					int gender = rs.getInt(9); //int
+					
+					String genderStr = "";
+					if(gender == 1) genderStr = "male";
+					else if(gender == 1) genderStr = "female";
+					else genderStr = "other";
+					
+					result = new UserResponseDto(new User(id, username, password, name, email, phone, country, birth, genderStr));
+					System.out.println("result: " + result);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				DBManager.close(conn, pstmt, rs);
+			}
+		}
+		
+		
+		return null;
+	}
 //	
 //	public UserResponseDto findByPassword(String password) {
 //		for(int i=0; i<list.size(); i++) {
@@ -184,5 +218,7 @@ public class UserDao {
 //	public int getSize() {
 //		return list.size();
 //	}
+	
+	
 
 }

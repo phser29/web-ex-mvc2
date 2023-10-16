@@ -16,7 +16,6 @@
 		<input type="submit" value="삭제">
 	</form>
 	<h3>
-		<%= dao.findAll() %>
 	</h3>
 </body>
 <jsp:include page="/footer"/>
