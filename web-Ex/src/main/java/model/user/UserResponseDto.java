@@ -1,4 +1,4 @@
-package user;
+package model.user;
 
 public class UserResponseDto {
 	private int id;

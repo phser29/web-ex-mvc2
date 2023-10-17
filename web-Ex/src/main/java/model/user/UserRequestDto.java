@@ -1,6 +1,7 @@
-package user;
+package model.user;
 
-public class User {
+public class UserRequestDto {
+	
 	private int id; // Entity PK 
 	private String username;
 	private String password;
@@ -11,18 +12,29 @@ public class User {
 	private String birth;
 	private String gender;
 
-	public User() {}
-	public User(String username, String password) {
+	public UserRequestDto(String username) {
+		this.username = username;
+	}
+	
+	public UserRequestDto(String username, String password) {
 		this.username = username;
 		this.password = password;
 	}
-	public User(String username, String password, String name) {
+	public UserRequestDto(String username, String password, String name) {
 		this.username = username;
 		this.password = password;
 		this.name = name;
 	}
-	
-	public User(String username, String password, String name, String email, String phone, String country, String birth, String gender) {
+	public UserRequestDto(String password, String name, String email, String phone, String country, String birth, String gender) {
+		this.password = password;
+		this.name = name;
+		this.email = email;
+		this.phone = phone;
+		this.country = country;
+		this.birth = birth;
+		this.gender = gender;
+	}
+	public UserRequestDto(String username, String password, String name, String email, String phone, String country, String birth, String gender) {
 		this.username = username;
 		this.password = password;
 		this.name = name;
@@ -31,10 +43,9 @@ public class User {
 		this.country = country;
 		this.birth = birth;
 		this.gender = gender;
-		
 	}
 	
-	public User(int id, String username, String password, String name, String email, String phone, String country, String birth, String gender) {
+	public UserRequestDto(int id, String username, String password, String name, String email, String phone, String country, String birth, String gender) {
 		this.id = id;
 		this.username = username;
 		this.password = password;
@@ -44,48 +55,14 @@ public class User {
 		this.country = country;
 		this.birth = birth;
 		this.gender = gender;
-		
 	}
 	
-	public User(UserRequestDto user) {
-		this.id = user.getId();
-		this.username = user.getUsername();
-		this.password = user.getPassword();
-		this.name = user.getName();
-		this.email = user.getEmail();
-		this.phone = user.getPhone();
-		this.country = user.getCountry();
-		this.birth = user.getBirth();
-		this.gender = user.getGender();
-		
-	}
-	
-	public int getId() {
-		return id;
-	}
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getUsername() {
-		return username;
-	}
-	public void setUsername(String username) {
-		this.username = username;
-	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
+
 	public String getEmail() {
-		return email;
+		return email; 
 	}
 	public void setEmail(String email) {
 		this.email = email;
@@ -113,6 +90,27 @@ public class User {
 	}
 	public void setGender(String gender) {
 		this.gender = gender;
+	}
+	public int getId() {
+		return id;
+	}
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 	@Override

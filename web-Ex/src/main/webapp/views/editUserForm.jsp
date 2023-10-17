@@ -36,6 +36,10 @@
 			</tr>
 		</c:forEach>
 	</table>
+	
+	<form action="/servlet" id="clickbtn1">
+		<input type="hidden" name="command" value="editUserForm">
+	</form>
 </body>
 <jsp:include page="/footer"/>
 </html>

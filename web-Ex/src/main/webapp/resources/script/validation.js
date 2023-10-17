@@ -14,12 +14,6 @@ const error_phone = document.getElementById("error-phone");
 
 const regExp = /^\d{3}-\d{4}-\d{4}$/;
 
-form.addEventListener("submit", e => {
-	// 기본 동작을 무시 
-	e.preventDefault();
-	
-	checkForm(form);
-});
 
 input_username.addEventListener('change', e => {
 	if(input_username.value !== '') {

@@ -1,16 +1,13 @@
-package user;
+package model.user;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import com.mysql.cj.x.protobuf.MysqlxDatatypes.Array;
-import com.mysql.cj.xdevapi.PreparableStatement;
 
-import utill.DBManager;
+import model.util.DBManager;
 
 public class UserDao {
 	
@@ -64,8 +61,6 @@ public class UserDao {
 		}
 		return -1;
 	}
-	
-	
 	
 	private boolean generateUsername(UserRequestDto dto) {
 		

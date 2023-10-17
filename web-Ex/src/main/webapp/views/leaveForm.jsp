@@ -8,18 +8,16 @@
 <jsp:include page="/header"/>
 <body>
 <%
-// 	if(session.getAttribute("log") = null) {
-// 		response.sendRedirect("login");
-// 	}
+	if(session.getAttribute("log") == null) {
+		response.sendRedirect("/login");
+	}
 %>
-	<form action="/leaveForm" method="post">
+	<form action="servlet" method="post">
+	<input type="hidden" name="command" value="leaveForm">
 		<input type="text" name="username" placeholder="username">
 		<input type="text" name="password" placeholder="username">
 		<input type="submit" value="삭제">
 	</form>
-	<h3>
-		
-	</h3>
 </body>
 <jsp:include page="/footer"/>
 </html>

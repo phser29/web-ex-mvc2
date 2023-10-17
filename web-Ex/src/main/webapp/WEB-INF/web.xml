@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" version="4.0">
-  <display-name>web-Ex</display-name>
+  <display-name>web_ex</display-name>
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
     <welcome-file>index.htm</welcome-file>
@@ -10,6 +10,15 @@
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
   
+  <servlet>
+  	<servlet-name>SerivceServlet</servlet-name>
+  	<servlet-class>controller.ServiceServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>SerivceServlet</servlet-name>
+  	<url-pattern>/servlet</url-pattern>
+  </servlet-mapping>
   
    <!-- JSP file Mapping -->
 	<servlet>
@@ -45,7 +54,7 @@
   
 	<servlet>
 		<servlet-name>mypage</servlet-name>
-		<jsp-file>/mypage.jsp</jsp-file>
+		<jsp-file>/views/mypage.jsp</jsp-file>
 	</servlet>
 
 	<servlet-mapping>
@@ -55,27 +64,17 @@
 	 
 	<servlet>
 		<servlet-name>joinForm</servlet-name>
-		<jsp-file>/joinForm.jsp</jsp-file>
+		<jsp-file>/views/joinForm.jsp</jsp-file>
 	</servlet>
 
 	<servlet-mapping>
 		<servlet-name>joinForm</servlet-name>
 		<url-pattern>/join</url-pattern>
 	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>joinFormAction</servlet-name>
-		<servlet-class>user.controller.JoinFormAction</servlet-class>
-	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>joinFormAction</servlet-name>
-		<url-pattern>/joinForm</url-pattern>
-	</servlet-mapping>
 	
 	<servlet>
 		<servlet-name>loginForm</servlet-name>
-		<jsp-file>/loginForm.jsp</jsp-file>
+		<jsp-file>/views/loginForm.jsp</jsp-file>
 	</servlet>
 	
 	<servlet-mapping>
@@ -84,49 +83,28 @@
 	</servlet-mapping>
 	
 	<servlet>
-		<servlet-name>loginFormAction</servlet-name>
-		<servlet-class>user.controller.LoginFormAction</servlet-class>
-	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>loginFormAction</servlet-name>
-		<url-pattern>/loginForm</url-pattern>
-	</servlet-mapping>
-	
-	
-	<servlet>
 		<servlet-name>logoutFormAction</servlet-name>
-		<servlet-class>user.controller.LogoutFormAction</servlet-class>
+		<servlet-class>user.controller.LogoutAction</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
 		<servlet-name>logoutFormAction</servlet-name>
-		<url-pattern>/logoutForm</url-pattern>
+		<url-pattern>/LogoutAction</url-pattern>
 	</servlet-mapping>
-	
+	<!--조회--> 
 	<servlet>
 		<servlet-name>editUserForm</servlet-name>
-		<jsp-file>/editUserForm.jsp</jsp-file>
-	</servlet>
+		<jsp-file>/views/editUserForm.jsp</jsp-file>
+		</servlet>
 
 	<servlet-mapping>
 		<servlet-name>editUserForm</servlet-name>
 		<url-pattern>/editUser</url-pattern>
 	</servlet-mapping>
-	
-	<servlet>
-		<servlet-name>editUserFormAction</servlet-name>
-		<servlet-class>user.controller.EditUserFormAction</servlet-class>
-	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>editUserFormAction</servlet-name>
-		<url-pattern>/editUserForm</url-pattern>
-	</servlet-mapping>
-	
+	 
 	<servlet>
 		<servlet-name>leaveForm</servlet-name>
-		<jsp-file>/leaveForm.jsp</jsp-file>
+		<jsp-file>/views/leaveForm.jsp</jsp-file>
 	</servlet>
 
 	<servlet-mapping>
@@ -134,14 +112,15 @@
 		<url-pattern>/leave</url-pattern>
 	</servlet-mapping>
 	
+ 	<!-- update -->
 	<servlet>
-		<servlet-name>leaveFormAction</servlet-name>
-		<servlet-class>user.controller.LeaveFormAction</servlet-class>
+		<servlet-name>updateForm</servlet-name>
+		<jsp-file>/views/updateForm.jsp</jsp-file>
 	</servlet>
 
 	<servlet-mapping>
-		<servlet-name>leaveFormAction</servlet-name>
-		<url-pattern>/leaveForm</url-pattern>
+		<servlet-name>updateForm</servlet-name>
+		<url-pattern>/update</url-pattern>
 	</servlet-mapping>
-  
+	
 </web-app>

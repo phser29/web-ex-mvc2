@@ -11,7 +11,8 @@
 	<section>
 		
 		<h1>회원가입</h1>
-		<form method="POST" action="/joinForm" id="form">
+		<form method="POST" action="/servlet" id="form">
+		<input type="hidden" name="command" value="joinForm">
 			<div>
 				<div class="group">
 					<input type="text" name="username" id="username" placeholder="아이디">
