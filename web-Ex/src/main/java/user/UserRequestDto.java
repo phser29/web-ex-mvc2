@@ -45,8 +45,24 @@ public class UserRequestDto {
 		this.gender = gender;
 	}
 	
+	public UserRequestDto(int id, String username, String password, String name, String email, String phone, String country, String birth, String gender) {
+		this.id = id;
+		this.username = username;
+		this.password = password;
+		this.name = name;
+		this.email = email;
+		this.phone = phone;
+		this.country = country;
+		this.birth = birth;
+		this.gender = gender;
+	}
+	
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public String getEmail() {
-		return email;
+		return email; 
 	}
 	public void setEmail(String email) {
 		this.email = email;

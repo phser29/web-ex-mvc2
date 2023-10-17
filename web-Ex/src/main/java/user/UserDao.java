@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.mysql.cj.x.protobuf.MysqlxDatatypes.Array;
 import com.mysql.cj.xdevapi.PreparableStatement;
 
 import utill.DBManager;
@@ -17,6 +18,7 @@ public class UserDao {
 	private PreparedStatement pstmt;
 	private ResultSet rs;
 	private UserResponseDto result;
+	private ArrayList<UserResponseDto> list;
 	
 	// GoF 디자인 패턴 중 > 생성 패턴 중 하나인 > Singleton Pattern
 	
@@ -31,43 +33,41 @@ public class UserDao {
 	
 	
 	// 1) Create
-	public boolean createUser(UserRequestDto user) {
+	public int createUser(String username, String password, String name, String email, String phone, String country, String birth, String gender) {
 		conn = DBManager.getConnection();
 		
 		if(conn != null) {
 			String sql = "INSERT INTO `user` (id, username, password, name, email, phone, country, birth, gender)"
-					+ "VALUES (, ?, ?, ?, ?, ?, ?, ?, ?)";
+					+ "VALUES ((SELECT IFNULL(MAX(id), 0)+1 FROM user B), ?, ?, ?, ?, ?, ?, ?, ?)";
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setString(1, username);
+				pstmt.setString(2, password);
+				pstmt.setString(3, name);
+				pstmt.setString(4, email);
+				pstmt.setString(5, phone);
+				pstmt.setString(6, country);
+				pstmt.setString(7, birth);
+				pstmt.setString(8, gender);
+				
+				int result = pstmt.executeUpdate();
+				if(result == 1) {
+					return 1;
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				DBManager.close(conn, pstmt); 
+			}
+			
 		}
 		
-		return true;
+		return -1;
 	}
 	
-//	public boolean isDuplicatedUser(UserRequestDto user) {
-//		
-//		for(int i=0; i<list.size(); i++) {
-//			if(user.getUsername().equals(list.get(i).getUsername()))
-//				return true;
-//		}
-//		return false;
-//	}
-	
-//	private int generateId() {
-//		int id = 0;
-//		
-//		boolean isDupl = false;
-//		do {
-//			id = (int) Math.floor(Math.random() * (9999-1000+1)) + 1000;	// 1000~9999
-//
-//			for(int i=0; i<list.size(); i++) {
-//				if(list.get(i).getId() == id)
-//					isDupl = true;
-//			}
-//		} while(isDupl);
-//		
-//		return id;
-//	}
-//	
-//	// 2) Read
+	// 2) Read
 	public UserResponseDto findById(int id) {
 		conn = DBManager.getConnection();
 		
@@ -112,7 +112,7 @@ public class UserDao {
 		conn = DBManager.getConnection();
 		
 		if(conn != null) {
-			String sql = "SELECT * FROM `user` WHERE username=?";
+			String sql = "SELECT * FROM user WHERE username=?";
 			
 			try {
 				pstmt = conn.prepareStatement(sql);
@@ -146,42 +146,52 @@ public class UserDao {
 		}
 		
 		
-		return null;
+		return result;
 	}
-//	
-//	public UserResponseDto findByPassword(String password) {
-//		for(int i=0; i<list.size(); i++) {
-//			if(list.get(i).getPassword().equals(password))
-//				return new UserResponseDto(list.get(i));
-//		}
-//		
-//		return null;
-//	}
-//	
-//	private User getUser(UserRequestDto userDto) {
-//		User user = null;
-//		
-//		for(int i=0; i<list.size(); i++) {
-//			if(list.get(i).getUsername() == userDto.getUsername()) {
-//				user = list.get(i);
-//			}
-//		}
-//		
-//		return user;
-//	}
-//	
-//	public ArrayList<UserResponseDto> findAll() {
-//		// private list 리턴 X (사본) 
-//		ArrayList<UserResponseDto> response = new ArrayList<>();
-//		
-//		for(int i=0; i<list.size(); i++) {
-//			User user = list.get(i);
-//			response.add(new UserResponseDto(user));
-//		}
-//		
-//		return response;
-//	}
-//	
+	
+	public ArrayList<UserResponseDto> findAll() {
+		conn = DBManager.getConnection();
+		
+		if(conn != null) {
+			String sql = "SELECT * FROM user";
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+				rs = pstmt.executeQuery();
+				
+				list = new ArrayList<>();
+				
+				while(rs.next()) {
+					if(rs != null) {
+						int id = rs.getInt(1);
+						String username = rs.getString(2);
+						String password = rs.getString(3);
+						String name = rs.getString(4);
+						String email = rs.getString(5);
+						String phone = rs.getString(6);
+						String country = rs.getString(7);
+						String birth = rs.getString(8);
+						int gender = rs.getInt(9);
+						
+						String genderStr = "";
+						if(gender == 1) genderStr = "male";
+						else if(gender == 1) genderStr = "female";
+						else genderStr = "other";
+						
+						list.add(new UserResponseDto(new User(id, username, password, name, email, phone, country, birth, genderStr)));
+					}
+					
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				DBManager.close(conn, pstmt, rs);
+			}
+		}
+		
+		return list;
+	}
+	
 //	// 3) Update (password)
 //	public boolean setUser(UserRequestDto user, String username, String password, String name, String email, String phone, String country, String birth, String gender) {
 //		User target = getUser(user);
@@ -202,23 +212,30 @@ public class UserDao {
 //		return true;
 //	}
 //	
-//	// 4) Delete
-//	public boolean deleteUser(UserRequestDto user) {
-//		User target = getUser(user);
-//		System.out.println("terget: "+target);
-//		
-//		if(target == null) {
-//			return false;
-//		}
-//		
-//		list.remove(target);
-//		return true;
-//	}
-//	
-//	public int getSize() {
-//		return list.size();
-//	}
-	
-	
+	// 4) Delete
+	public int deleteUser(String username) {
+		conn = DBManager.getConnection();
+		
+		if(conn != null) {
+			String sql = "DELETE FROM user WHERE username=?";
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, username);
+				
+				int res = pstmt.executeUpdate();
+				if(res > 0) {
+					return 1;
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				DBManager.close(conn, pstmt);
+			}
+			
+		}
+		
+		return -1;
+	}
 
 }

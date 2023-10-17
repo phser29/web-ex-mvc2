@@ -54,12 +54,12 @@ public class LoginFormAction extends HttpServlet {
 		
 		String url = "";
 		
-		if(user != null && user.equals(user.getPassword())) {
+		if(user != null) {
 			HttpSession session = request.getSession();
 			session.setAttribute("log", username);
 			url = "/mypage";
 		} else {
-			url = "login";
+			url = "/login";
 		}
 		
 		response.sendRedirect(url);

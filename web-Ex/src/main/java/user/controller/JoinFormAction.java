@@ -8,13 +8,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import user.UserDao;
+import user.UserRequestDto;
 
 /**
  * Servlet implementation class JoinFormAction
  */
 public class JoinFormAction extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	UserDao dao = UserDao.getInstance();
 	
     /**
      * Default constructor. 
@@ -33,6 +33,8 @@ public class JoinFormAction extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		String name = request.getParameter("name");
@@ -42,7 +44,15 @@ public class JoinFormAction extends HttpServlet {
 		String birth = request.getParameter("birth");
 		String gender = request.getParameter("gender");
 		
-		dao.createUser(null);
+		int save;
+		UserDao dao = UserDao.getInstance();
+		save = dao.createUser(username, password, name, email, phone, country, birth, gender);
+		
+		if(save != -1) {
+			response.sendRedirect("/login");
+		} else {
+			response.sendRedirect("/join");
+		}
 		
 	}
 
