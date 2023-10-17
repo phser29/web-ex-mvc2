@@ -22,23 +22,22 @@ public class UserDao {
 	
 	// GoF 디자인 패턴 중 > 생성 패턴 중 하나인 > Singleton Pattern
 	
-	private UserDao() {
-	}
+	private UserDao() {}
 	private static UserDao instance = new UserDao();
 	public static UserDao getInstance() {
 		return instance;
 	}
 	
 	//DB 연동
-	
-	
 	// 1) Create
 	public int createUser(String username, String password, String name, String email, String phone, String country, String birth, String gender) {
 		conn = DBManager.getConnection();
 		
+		
 		if(conn != null) {
+			
 			String sql = "INSERT INTO `user` (id, username, password, name, email, phone, country, birth, gender)"
-					+ "VALUES ((SELECT IFNULL(MAX(id), 0)+1 FROM user B), ?, ?, ?, ?, ?, ?, ?, ?)";
+					+ "VALUES ((SELECT IFNULL(MAX(id),0)+1 FROM user U), ?, ?, ?, ?, ?, ?, DATE(?), ?)";
 			
 			try {
 				pstmt = conn.prepareStatement(sql);
@@ -63,8 +62,44 @@ public class UserDao {
 			}
 			
 		}
-		
 		return -1;
+	}
+	
+	
+	
+	private boolean generateUsername(UserRequestDto dto) {
+		
+		int id = 0;
+		
+		String sql = "select count(*) from user where username=?";
+		
+		boolean isDupl = false;
+		do {
+			conn = DBManager.getConnection();
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, dto.getUsername());
+				
+				rs = pstmt.executeQuery();
+				
+				if(rs.next()) {
+					int count = rs.getInt(1);
+					if(count > 1) {
+						isDupl = false;
+					} else {
+						isDupl = true;
+					}
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				DBManager.close(conn, pstmt, rs);
+			}
+			
+		}while(isDupl);
+		
+		return isDupl;
 	}
 	
 	// 2) Read
@@ -109,10 +144,12 @@ public class UserDao {
 	}
 	
 	public UserResponseDto findByUsername(String username) {
+		UserResponseDto result = null;
+		
 		conn = DBManager.getConnection();
 		
 		if(conn != null) {
-			String sql = "SELECT * FROM user WHERE username=?";
+			String sql = "SELECT * FROM `user` WHERE username=?";
 			
 			try {
 				pstmt = conn.prepareStatement(sql);
@@ -127,25 +164,24 @@ public class UserDao {
 					String email = rs.getString(5);
 					String phone = rs.getString(6);
 					String country = rs.getString(7);
-					String birth = rs.getString(8); //date
-					int gender = rs.getInt(9); //int
+					String birth = rs.getString(8);
+					int gender = rs.getInt(9);
 					
 					String genderStr = "";
 					if(gender == 1) genderStr = "male";
-					else if(gender == 1) genderStr = "female";
-					else genderStr = "other";
+					else if(gender == 2) genderStr = "female";
+					else if(gender == 3) genderStr = "other";
 					
 					result = new UserResponseDto(new User(id, username, password, name, email, phone, country, birth, genderStr));
-					System.out.println("result: " + result);
+					System.out.println("result : " + result);
 				}
+				
 			} catch (SQLException e) {
 				e.printStackTrace();
 			} finally {
 				DBManager.close(conn, pstmt, rs);
 			}
 		}
-		
-		
 		return result;
 	}
 	
@@ -180,7 +216,6 @@ public class UserDao {
 						
 						list.add(new UserResponseDto(new User(id, username, password, name, email, phone, country, birth, genderStr)));
 					}
-					
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -192,40 +227,47 @@ public class UserDao {
 		return list;
 	}
 	
-//	// 3) Update (password)
-//	public boolean setUser(UserRequestDto user, String username, String password, String name, String email, String phone, String country, String birth, String gender) {
-//		User target = getUser(user);
-//		System.out.println("target: "+target);
-//		
-//		if(target == null)
-//			return false;
-//		
-//		target.setUsername(username);
-//		target.setPassword(password);
-//		target.setEmail(email);
-//		target.setName(name);
-//		target.setBirth(birth);
-//		target.setGender(gender);
-//		target.setCountry(country);
-//		target.setPhone(phone);
-//		
-//		return true;
-//	}
-//	
+	// 3) Update (password)
+	public boolean setUser(UserRequestDto user) {
+		
+		String sql = "update `user` set `password`=?, email=?, gender=?, country=?, phone=? where id=?;";
+		
+		conn = DBManager.getConnection();
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, user.getPassword());
+			pstmt.setString(2, user.getEmail());
+			pstmt.setString(3, user.getGender());
+			pstmt.setString(4, user.getCountry());
+			pstmt.setString(5, user.getPhone());
+			pstmt.setInt(5, user.getId());
+			
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBManager.close(conn, pstmt);
+		} 
+		
+		return true;
+	}
+	
 	// 4) Delete
-	public int deleteUser(String username) {
+	public boolean deleteUser(UserRequestDto user) {
 		conn = DBManager.getConnection();
 		
 		if(conn != null) {
-			String sql = "DELETE FROM user WHERE username=?";
+			String sql = "DELETE FROM user WHERE username=? AND password=?";
 			
 			try {
 				pstmt = conn.prepareStatement(sql);
-				pstmt.setString(1, username);
+				pstmt.setString(1, user.getUsername());
+				pstmt.setString(2, user.getPassword());
 				
 				int res = pstmt.executeUpdate();
 				if(res > 0) {
-					return 1;
+					return true;
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -235,7 +277,7 @@ public class UserDao {
 			
 		}
 		
-		return -1;
+		return false;
 	}
-
+	
 }

@@ -7,8 +7,14 @@
 </head>
 <jsp:include page="/header"/>
 <body>
-	<form action="leaveForm" method="post">
+<%
+// 	if(session.getAttribute("log") = null) {
+// 		response.sendRedirect("login");
+// 	}
+%>
+	<form action="/leaveForm" method="post">
 		<input type="text" name="username" placeholder="username">
+		<input type="text" name="password" placeholder="username">
 		<input type="submit" value="삭제">
 	</form>
 	<h3>
