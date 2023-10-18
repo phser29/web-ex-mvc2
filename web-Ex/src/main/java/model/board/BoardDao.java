@@ -49,7 +49,6 @@ public class BoardDao {
 			} finally {
 				DBManager.close(conn, pstmt);
 			}
-			
 		}
 		
 		return -1;
@@ -127,7 +126,7 @@ public class BoardDao {
 	}
 	
 	//4. 글수정
-	public int update() {
+	public int update(String title, String content, int auther) {
 		conn = DBManager.getConnection();
 		
 		if(conn!=null) {
@@ -135,7 +134,14 @@ public class BoardDao {
 			
 			try {
 				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, title);
+				pstmt.setString(2, content);
+				pstmt.setInt(3, auther);
 				
+				int result = pstmt.executeUpdate();
+				if(result > 0) {
+					return 1;
+				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -145,15 +151,20 @@ public class BoardDao {
 	}
 	
 	//5. 글삭제
-	public int delete() {
-conn = DBManager.getConnection();
+	public int delete(int auther) {
+		conn = DBManager.getConnection();
 		
 		if(conn!=null) {
 			String sql = "DELETE FROM board WHERE auther=?";
 			
 			try {
 				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, auther);
 				
+				int result = pstmt.executeUpdate();
+				if(result > 0) {
+					return 1;
+				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}

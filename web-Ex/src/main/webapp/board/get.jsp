@@ -14,6 +14,7 @@
 
   <form method="post" action="/servlet">
  	<input type="hidden" name="command" value="updateAction">
+ 	<input type="hidden" name="auther" value="auther">
     <table align = center width=700 border=1 cellpadding=2 >
 		<tr>
        		<td>작성자<br>코드</td>	
@@ -30,7 +31,7 @@
        	<tr>
        		<td colspan="6">
        			<input type="submit" value="수정">
-    			<button type="button"><a href="/board/list.jsp">목록으로</a></button>
+    			<button type="button"><a href="http://localhost:8080/servlet?command=listAllAction">목록으로</a></button>
        		</td>
        	</tr>
     </table>

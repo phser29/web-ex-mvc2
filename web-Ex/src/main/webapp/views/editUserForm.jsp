@@ -1,48 +1,41 @@
-<%@page import="model.user.UserDao"%>
-<%@page import="model.user.UserResponseDto"%>
 <%@page import="java.util.ArrayList"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-	<link rel="stylesheet" href="/resources/style/table.css">
+<meta charset="UTF-8">
 </head>
+<link rel="stylesheet" href="/resources/style/form.css">
 <jsp:include page="/header"/>
 <body>
-<section>
 	
-	<%
-		UserDao dao = UserDao.getInstance();
-		ArrayList<UserResponseDto> list = dao.findAll();
-	%>
-	<table border="1">
-		<thead>
+	<h1>회원목록</h1>
+	<table border=1>
+		<tr>
+			<th>id</th>
+			<th>username</th>
+			<th>name</th>
+			<th>email</th>
+			<th>phone</th>
+			<th>country</th>
+			<th>birth</th>
+			<th>gender</th>
+		</tr>
+		<c:forEach var="var" items="${requestScope.findAll}">
 			<tr>
-				<th>no</th>
-				<th>username</th>
-				<th>email</th>
-				<th>name</th>
-				<th>gender</th>
-				<th>country</th>
+				<th>${var.id}</th>
+				<th>${var.username}</th>
+				<th>${var.name}</th>
+				<th>${var.email}</th>
+				<th>${var.phone}</th>
+				<th>${var.country}</th>
+				<th>${var.birth}</th>
+				<th>${var.gender}</th>
 			</tr>
-		</thead>
-		<tbody>
-		<%for(int i=0; i<list.size(); i++) {
-			UserResponseDto user = list.get(i);
-		%>
-			<tr>
-				<td><%=i+1 %></td>
-				<td><%=user.getUsername() %></td>
-				<td><%=user.getEmail() %></td>
-				<td><%=user.getName() %></td>
-				<td><%=user.getGender() %></td>
-				<td><%=user.getCountry() %></td>
-			</tr>
-		<%} %>
-		</tbody>
+		</c:forEach>
 	</table>
-</section>
 </body>
 <jsp:include page="/footer"/>
 </html>

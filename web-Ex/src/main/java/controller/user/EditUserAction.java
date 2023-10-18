@@ -1,6 +1,7 @@
-package controller.board;
+package controller.user;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -8,22 +9,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import controller.Action;
-import model.board.BoardDao;
+import model.user.UserDao;
+import model.user.UserResponseDto;
 
-public class GetAction implements Action {
+public class EditUserAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		UserDao dao = UserDao.getInstance();
+		ArrayList<UserResponseDto> bind= dao.findAll();
 		
-		String auther = request.getParameter("auther");
-		int aut = Integer.parseInt(auther);
+		if(bind != null) {
+			request.setAttribute("findAll", bind);
+		}
 		
-		BoardDao dao = BoardDao.getInstance();
-		request.setAttribute("get", dao.get(aut));
-		
-		RequestDispatcher rd = request.getRequestDispatcher("board/get.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/editUser");
 		rd.forward(request, response);
+	
 	}
 
-	
 }

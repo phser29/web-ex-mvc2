@@ -14,11 +14,7 @@
 <c:if test="${empty log}">
 	<c:redirect url="/login"/>
 </c:if>
-	<%
-		BoardDao dao = BoardDao.getInstance();
-		ArrayList<Board> list = dao.list();
-	%>
-	<table align = center width=700 border=1 cellpadding=2 >
+	<table align=center width=700 border=1 cellpadding=2 >
 		<thead>
 			<tr>
 				<th>id</th>
@@ -30,20 +26,16 @@
 			</tr>
 		</thead>
 		<tbody>
-			<%for(int i=0; i<list.size(); i++) {
-				Board vo = list.get(i);
-			%>
+			<c:forEach var="var" items="${requestScope.list}">
 			<tr>
-				<td><%=vo.getId() %></td>
-				<td><%=vo.getAuther() %></td>
-				<td><a href="http://localhost:8080/servlet?command=getAction&auther=${log.id }"><%=vo.getTitle() %></a></td>
-				<td><%=vo.getContent() %></td>
-				<td><%=vo.getReg_date() %></td>
-				<td><%=vo.getMog_date() %></td>
+				<td>${var.id }</td>
+				<td>${var.auther }</td>
+				<td><a href="http://localhost:8080/servlet?command=getAction&auther=${var.auther }">${var.title  }</a></td>
+				<td>${var.content }</td>
+				<td>${var.reg_date }</td>
+				<td>${var.mog_date }</td>
 			</tr>
-			<%
-				}
-			%>
+			</c:forEach>
 			<tr>
 				<td colspan="6"><button type="button"><a href="/board/insert.jsp">글작성</a></button></td>
 			</tr>

@@ -29,7 +29,7 @@
        	<tr>
 			<td colspan="6">
 				<input type="submit" value="작성">
-       			<button type="button"><a href="/board/list.jsp">목록으로</a></button>
+       			<button type="button"><a href="http://localhost:8080/servlet?command=listAllAction">목록으로</a></button>
        			<button type="button"><a href="/">메인</a></button>
 			</td>
 		</tr>

@@ -3,7 +3,9 @@ package controller;
 import controller.board.DeleteAction;
 import controller.board.GetAction;
 import controller.board.InsertAction;
+import controller.board.ListAllAction;
 import controller.board.UpdateAction;
+import controller.user.EditUserAction;
 import controller.user.JoinAction;
 import controller.user.LeaveAction;
 import controller.user.LoginAction;
@@ -32,7 +34,9 @@ public class ActionFactory {
 			action = new LogoutAction();
 		} else if(command.equals("loginForm")) {
 			action = new LoginAction();
-		} 
+		} else if(command.equals("editUserForm")) {
+			action = new EditUserAction();
+		}
 		
 		//board command
 		if(command.equals("insertAction")) {
@@ -41,8 +45,10 @@ public class ActionFactory {
 			action = new GetAction();
 		} else if(command.equals("updateAction")) {
 			action = new UpdateAction();
-		} else if(command.equals("removeForm")) {
+		} else if(command.equals("deleteAction")) {
 			action = new DeleteAction();
+		} else if(command.equals("listAllAction")) {
+			action = new ListAllAction();
 		}
 		
 		return action;
