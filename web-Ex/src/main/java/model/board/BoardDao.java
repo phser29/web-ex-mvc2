@@ -149,7 +149,7 @@ public class BoardDao {
 conn = DBManager.getConnection();
 		
 		if(conn!=null) {
-			String sql = "UPDATE board SET title=?, content=? WHERE auther=?";
+			String sql = "DELETE FROM board WHERE auther=?";
 			
 			try {
 				pstmt = conn.prepareStatement(sql);
