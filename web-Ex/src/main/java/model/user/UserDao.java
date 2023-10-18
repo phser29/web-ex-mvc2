@@ -30,7 +30,6 @@ public class UserDao {
 	public int createUser(String username, String password, String name, String email, String phone, String country, String birth, String gender) {
 		conn = DBManager.getConnection();
 		
-		
 		if(conn != null) {
 			
 			String sql = "INSERT INTO `user` (id, username, password, name, email, phone, country, birth, gender)"

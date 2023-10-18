@@ -4,9 +4,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>선택된 글 삭제</title>
 </head>
 <body>
-
+	<form action="" method="post">
+		<input type="text" value="작성자 코드입력">
+		<input type="button" value="입력">		
+	</form>
 </body>
 </html>
